@@ -1,5 +1,9 @@
 package com.sda.grouproject.model;
 
+import com.sda.grouproject.enums.AgeRestriction;
+import com.sda.grouproject.enums.Exclusive;
+import com.sda.grouproject.enums.Genre;
+
 public class Game {
 
     private Integer id;
