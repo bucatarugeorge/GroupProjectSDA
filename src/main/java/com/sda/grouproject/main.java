@@ -25,8 +25,12 @@ public class main {
         developerRepository.save(developer1);
         publisherRepository.save(publisher1);
 
+        User user= new User();
+
         GameUserInterface gameUserInterface= new GameUserInterface();
-        gameUserInterface.register();
+        gameUserInterface.registerSave(user);
+
+        gameUserInterface.logIn();
 
         SessionManager.shutDown();
     }

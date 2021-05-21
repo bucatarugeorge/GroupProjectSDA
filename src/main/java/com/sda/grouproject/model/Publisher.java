@@ -1,6 +1,7 @@
 package com.sda.grouproject.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "publishers")
@@ -11,6 +12,9 @@ public class Publisher {
     private Integer publisherId;
     @Column(name = "publisher_name")
     private String publisherName;
+
+    @OneToMany(mappedBy = "publisher")
+    private List<Game> gameList;
 
     public Publisher(String publisherName) {
         this.publisherName = publisherName;
@@ -33,6 +37,14 @@ public class Publisher {
 
     public void setPublisherName(String publisherName) {
         this.publisherName = publisherName;
+    }
+
+    public List<Game> getGameList() {
+        return gameList;
+    }
+
+    public void setGameList(List<Game> gameList) {
+        this.gameList = gameList;
     }
 
     @Override

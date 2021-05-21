@@ -1,6 +1,8 @@
 package com.sda.grouproject.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -16,6 +18,8 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @ManyToMany(mappedBy = "userSet")
+    private Set<Game> gameSet= new HashSet<>();
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
@@ -55,6 +59,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Game> getGameSet() {
+        return gameSet;
+    }
+
+    public void setGameSet(Set<Game> gameSet) {
+        this.gameSet = gameSet;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.sda.grouproject.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "developers")
@@ -11,6 +12,8 @@ public class Developer {
     private Integer developerId;
     @Column(name ="developer_name")
     private String developerName;
+    @OneToMany(mappedBy = "developer")
+    private List<Game> gameList;
 
     public Developer(String name) {
         this.developerName = name;
@@ -19,20 +22,28 @@ public class Developer {
     public Developer() {
     }
 
-    public Integer getId() {
-        return developerId;
-    }
-
-    public void setId(Integer id) {
-        this.developerId = id;
-    }
-
     public String getDeveloperName() {
         return developerName;
     }
 
     public void setDeveloperName(String name) {
         this.developerName = name;
+    }
+
+    public Integer getDeveloperId() {
+        return developerId;
+    }
+
+    public void setDeveloperId(Integer developerId) {
+        this.developerId = developerId;
+    }
+
+    public List<Game> getGameList() {
+        return gameList;
+    }
+
+    public void setGameList(List<Game> gameList) {
+        this.gameList = gameList;
     }
 
     @Override

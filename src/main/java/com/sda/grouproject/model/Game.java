@@ -5,6 +5,8 @@ import com.sda.grouproject.enums.Exclusive;
 import com.sda.grouproject.enums.Genre;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "games")
@@ -31,6 +33,20 @@ public class Game {
     @Column(name = "rating_count")
     private int ratingCount;
     private int totalRatingSum;
+
+    @ManyToOne
+    @JoinColumn(name = "developer_id")
+    private Developer developer;
+
+    @ManyToOne
+    @JoinColumn(name = "publisher_id")
+    private Publisher publisher;
+
+    @ManyToMany
+    @JoinTable(name = "shopping_cart",
+    joinColumns ={@JoinColumn(name = "game_id")},
+    inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private Set<User> userSet= new HashSet<>();
 
     public Game(String gameName, Double price, String description, Genre genre,
                 Exclusive exclusive, int rating, int ratingCount, AgeRestriction ageRestriction) {
@@ -127,6 +143,34 @@ public class Game {
 
     public void setTotalRatingSum(Integer totalRatingSum) {
         this.totalRatingSum = totalRatingSum;
+    }
+
+    public void setTotalRatingSum(int totalRatingSum) {
+        this.totalRatingSum = totalRatingSum;
+    }
+
+    public Developer getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(Developer developer) {
+        this.developer = developer;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public Set<User> getUserSet() {
+        return userSet;
+    }
+
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
     }
 
     @Override
