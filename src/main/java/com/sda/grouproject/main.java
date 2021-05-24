@@ -1,6 +1,7 @@
 package com.sda.grouproject;
 
 import com.sda.grouproject.model.Developer;
+import com.sda.grouproject.model.Game;
 import com.sda.grouproject.model.Publisher;
 import com.sda.grouproject.model.User;
 import com.sda.grouproject.repository.DeveloperRepository;
@@ -28,7 +29,7 @@ public class main {
         User user= new User();
 
         GameUserInterface gameUserInterface= new GameUserInterface();
-        gameUserInterface.registerSave(user);
+        // gameUserInterface.registerSave(user);
 
         gameUserInterface.logIn();
 

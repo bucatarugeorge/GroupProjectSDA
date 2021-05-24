@@ -32,14 +32,14 @@ public class UserRepository {
         return user;
     }
 
-    public boolean findByUserName(String userName)
+    public boolean findByUserName(String username)
     {
         try
         {
         Session session= SessionManager.getSessionFactory().openSession();
-        String findByUserNameQuerry= "from User u where u.username=: userName";
+        String findByUserNameQuerry= "from User u where u.username=: username";
         Query<User> userQuery= session.createQuery(findByUserNameQuerry);
-        userQuery.setParameter("userName", userName);
+        userQuery.setParameter("username", username);
         User user= userQuery.getSingleResult();
         session.close();
         return user == null;
@@ -63,6 +63,21 @@ public class UserRepository {
         }
     }
 
+    public boolean checkPassword(String password)
+    {
+        try
+        {
+            Session session= SessionManager.getSessionFactory().openSession();
+            String findByPassword= "from User u where u.password=: password";
+            Query<User> userQuery= session.createQuery(findByPassword);
+            userQuery.setParameter("password", password);
+            User user= userQuery.getSingleResult();
+            session.close();
+            return user == null;
+        } catch (NoResultException e) {
+            return true;
+        }
+    }
 
     public void save(User user)
     {
