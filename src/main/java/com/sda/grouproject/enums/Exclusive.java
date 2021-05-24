@@ -4,5 +4,6 @@ public enum Exclusive {
     PC,
     PS5,
     XBOX_X,
-    NINTENDO_SWITCH
+    NINTENDO_SWITCH,
+    ALL
 }

@@ -22,13 +22,13 @@ public class Game {
     private Double price;
     @Column(name = "description")
     private String description;
-    @Column(name = "genre")
+    @Enumerated(EnumType.STRING)
     private Genre genre;
-    @Column(name = "exclusive")
+    @Enumerated(EnumType.STRING)
     private Exclusive exclusive;
     @Column(name = "rating")
     private double rating;
-    @Column(name = "age_restriction")
+    @Enumerated(EnumType.STRING)
     private AgeRestriction ageRestriction;
     @Column(name = "rating_count")
     private int ratingCount;
@@ -49,14 +49,13 @@ public class Game {
     private Set<User> userSet= new HashSet<>();
 
     public Game(String gameName, Double price, String description, Genre genre,
-                Exclusive exclusive, int rating, int ratingCount, AgeRestriction ageRestriction) {
+                Exclusive exclusive, int rating, AgeRestriction ageRestriction) {
         this.gameName = gameName;
         this.price = price;
         this.description = description;
         this.genre = genre;
         this.exclusive = exclusive;
         this.rating = rating;
-        this.ratingCount = ratingCount;
         this.ageRestriction = ageRestriction;
     }
 
