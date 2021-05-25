@@ -1,18 +1,26 @@
 package com.sda.grouproject.repository;
 
+import com.sda.grouproject.enums.Exclusive;
 import com.sda.grouproject.enums.Genre;
-import com.sda.grouproject.model.Developer;
 import com.sda.grouproject.model.Game;
 import com.sda.grouproject.model.User;
 import com.sda.grouproject.utils.SessionManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class GameUserInterface {
 
+    String FIND_BY_DEVELOPER= "from Game g WHERE g.developer.developerName =";
+    String FIND_BY_PUBLISHER= "from Game g WHERE g.publisher.publisherName =";
+    String FIND_BY_NAME= "from Game g WHERE g.name =";
+    String FIND_BY_EXCLUSIVE= "from Game g WHERE g.exclusive =";
+    String FIND_BY_GENRE= "from Game g WHERE g.genre =";
+    String FIND_BY_RATING= "from Game g WHERE g.rating >=";
+    String FIND_ALL_GAMES= "from Game";
 
     public void registerSave(User user)
     {
@@ -36,8 +44,8 @@ public class GameUserInterface {
         } else if (chosenOption.equals("Login")) {
             System.out.println("Please introduce your username or email:");
             String usernameOrEmail = scanner.nextLine();
-            if (!UserRepository.getInstance().findByUserName(usernameOrEmail)
-                    || !UserRepository.getInstance().findByEmail(usernameOrEmail))
+            if (!UserRepository.getInstance().findByColumn("username",usernameOrEmail)
+                    || !UserRepository.getInstance().findByColumn("email",usernameOrEmail))
             {
                 System.out.println("Please introduce your password:");
                 String password= scanner.nextLine();
@@ -64,7 +72,7 @@ public class GameUserInterface {
         System.out.println("Username:");
         String usernameOption= scanner.nextLine();
 
-        if(UserRepository.getInstance().findByUserName(usernameOption))
+        if(UserRepository.getInstance().findByColumn("username",usernameOption))
         {
             user.setUsername(usernameOption);
         }
@@ -82,7 +90,7 @@ public class GameUserInterface {
         System.out.println("Email:");
         String emailOption= scanner.nextLine();
 
-        if(UserRepository.getInstance().findByEmail(emailOption))
+        if(UserRepository.getInstance().findByColumn("email",emailOption))
         {
             user.setEmail(emailOption);
         }
@@ -95,49 +103,63 @@ public class GameUserInterface {
 
     //todo method that searches games from the database based on the user's input
 
-    private List<Game> findByGenre(Genre genre)
+    private List<Game> findByGameColumnName(String findBy, String object)
     {
             Session session = SessionManager.getSessionFactory().openSession();
-            String genreQuery= "from Game g WHERE g.genre = :genre ";
+            String genreQuery= findBy+ " '" + object+ "' ";
             Query<Game> gameQuery= session.createQuery(genreQuery);
-            gameQuery.setParameter("genre", genre);
             List<Game> gameList=gameQuery.list();
             System.out.println(gameList);
             session.close();
             return gameList;
     }
 
-    private List<Game> findByDeveloper(Developer developer)
-    {
-
-    }
-
-
-    private List<Game> findByPublisher()
-    {
-
-    }
-
-    private List<Game> findByExclusive()
-    {
-
-    }
-
-    private List<Game> findByRating()
-    {
-
-    }
-
-    public List<Game> findGames(int number)
-    {
-        System.out.println("Please select ");
-        Scanner scanner= new Scanner(System.in);
-        number= scanner.nextInt();
-        switch(number) {
+    public List<Game> findGames() {
+        System.out.println("Please select a number from 1 to 9.");
+        Scanner scanner = new Scanner(System.in);
+        int number = scanner.nextInt();
+        List<Game> games= new ArrayList<>();
+        switch (number) {
             case 1:
-                findByGenre(Genre.valueOf(scanner.nextLine()));
+                Scanner scanner2 = new Scanner(System.in);
+                System.out.println("Find By developer name. Please input one.");
+                games = findByGameColumnName(FIND_BY_DEVELOPER, scanner2.nextLine());
                 break;
             case 2:
+                Scanner scanner3 = new Scanner(System.in);
+                System.out.println("Find by publisher name.");
+                games=findByGameColumnName(FIND_BY_PUBLISHER, scanner3.nextLine());
+                break;
+            case 3:
+                Scanner scanner4 = new Scanner(System.in);
+                System.out.println("Find by game name.");
+                games=findByGameColumnName(FIND_BY_NAME, scanner4.nextLine());
+                break;
+            case 4:
+                Scanner scanner5 = new Scanner(System.in);
+                System.out.println("Find by genre");
+                games=findByGameColumnName(FIND_BY_GENRE, scanner5.nextLine());
+                break;
+            case 5:
+                Scanner scanner6 = new Scanner(System.in);
+                System.out.println("Find by exclusives");
+                games=findByGameColumnName(FIND_BY_EXCLUSIVE, scanner6.nextLine());
+                break;
+            case 6:
+                Scanner scanner7 = new Scanner(System.in);
+                System.out.println("Find by rating");
+                games=findByGameColumnName(FIND_BY_RATING, scanner7.nextLine());
+                break;
+            case 7:
+                Scanner scanner8 = new Scanner(System.in);
+                System.out.println("Show all games.");
+                games=findByGameColumnName(FIND_ALL_GAMES, "");
+                break;
+            default:
+                System.out.println("YO DAWG, I SAID NUMBERS.");
+                findGames();
+                break;
         }
+        return games;
     }
 }

@@ -6,7 +6,7 @@ import com.sda.grouproject.utils.SessionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class PublisherRepository {
+public class PublisherRepository extends GenericRepository {
 
     public Publisher findById(Integer id)
     {
@@ -16,31 +16,6 @@ public class PublisherRepository {
         return publisher;
     }
 
-    public void save(Publisher publisher)
-    {
-        Session session= SessionManager.getSessionFactory().openSession();
-        Transaction transaction= session.beginTransaction();
-        session.save(publisher);
-        transaction.commit();
-        session.close();
-    }
 
-    public void delete(Publisher publisher)
-    {
-        Session session= SessionManager.getSessionFactory().openSession();
-        Transaction transaction= session.beginTransaction();
-        session.delete(publisher);
-        transaction.commit();
-        session.close();
-    }
-
-    public void update(Publisher publisher)
-    {
-        Session session= SessionManager.getSessionFactory().openSession();
-        Transaction transaction= session.beginTransaction();
-        session.update(publisher);
-        transaction.commit();
-        session.close();
-    }
 
 }

@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "games")
+@Table(name = "game")
 public class Game {
 
     @Id
@@ -49,7 +49,7 @@ public class Game {
     private Set<User> userSet= new HashSet<>();
 
     public Game(String gameName, Double price, String description, Genre genre,
-                Exclusive exclusive, int rating, AgeRestriction ageRestriction) {
+                Exclusive exclusive, int rating, AgeRestriction ageRestriction, Publisher publisher, Developer developer) {
         this.gameName = gameName;
         this.price = price;
         this.description = description;
@@ -57,6 +57,8 @@ public class Game {
         this.exclusive = exclusive;
         this.rating = rating;
         this.ageRestriction = ageRestriction;
+        this.publisher= publisher;
+        this.developer= developer;
     }
 
     public Game() {

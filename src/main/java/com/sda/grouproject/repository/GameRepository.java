@@ -10,7 +10,7 @@ import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
 
-public class GameRepository {
+public class GameRepository extends GenericRepository {
 
     public Game findById(Integer id)
     {
@@ -20,32 +20,6 @@ public class GameRepository {
         return game;
     }
 
-    public void save(Game game)
-    {
-        Session session= SessionManager.getSessionFactory().openSession();
-        Transaction transaction= session.beginTransaction();
-        session.save(game);
-        transaction.commit();
-        session.close();
-    }
-
-    public void delete(Game game)
-    {
-        Session session= SessionManager.getSessionFactory().openSession();
-        Transaction transaction= session.beginTransaction();
-        session.delete(game);
-        transaction.commit();
-        session.close();
-    }
-
-    public void update(Game game)
-    {
-        Session session= SessionManager.getSessionFactory().openSession();
-        Transaction transaction= session.beginTransaction();
-        session.update(game);
-        transaction.commit();
-        session.close();
-    }
 
     public Game findByGameName(String gameName)
     {

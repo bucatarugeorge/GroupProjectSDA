@@ -22,10 +22,14 @@ public class main {
         User user1= new User("bigPePeEnergy69", "bibPP420@gmail.smokeit","123456");
         Developer developer1= new Developer("ABCD");
         Publisher publisher1= new Publisher("EFGH");
+        Developer developer2= new Developer("Bungie");
+        Publisher publisher2= new Publisher("Bungie");
 
         UserRepository.getInstance().save(user1);
         developerRepository.save(developer1);
+        developerRepository.save(developer2);
         publisherRepository.save(publisher1);
+        publisherRepository.save(publisher2);
 
         User user= new User();
 
@@ -34,11 +38,14 @@ public class main {
 
 
         Game game1= new Game("Cyberpunk 2077", 60.0,"Dissapointment", Genre.SANDBOX,
-                Exclusive.ALL,3, AgeRestriction.MATURE);
+                Exclusive.ALL,3, AgeRestriction.MATURE, publisher1, developer1);
+        Game game2= new Game("Destiny 2", 60.0, "Depression", Genre.MMORPG,
+                Exclusive.ALL, 1, AgeRestriction.TEEN,publisher2, developer2);
         gameRepository.save(game1);
-
+        gameRepository.save(game2);
         gameUserInterface.logIn();
-        Scanner scanner= new Scanner(System.in);
+        gameUserInterface.findGames();
+
         SessionManager.shutDown();
     }
 }
