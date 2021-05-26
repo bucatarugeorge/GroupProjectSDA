@@ -10,6 +10,7 @@ import com.sda.grouproject.model.User;
 import com.sda.grouproject.repository.*;
 import com.sda.grouproject.utils.SessionManager;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class main {
@@ -24,8 +25,10 @@ public class main {
         Publisher publisher1= new Publisher("EFGH");
         Developer developer2= new Developer("Bungie");
         Publisher publisher2= new Publisher("Bungie");
+        User user2= new User("D", "D@", "12");
 
         UserRepository.getInstance().save(user1);
+        UserRepository.getInstance().save(user2);
         developerRepository.save(developer1);
         developerRepository.save(developer2);
         publisherRepository.save(publisher1);
@@ -43,8 +46,13 @@ public class main {
                 Exclusive.ALL, 1, AgeRestriction.TEEN,publisher2, developer2);
         gameRepository.save(game1);
         gameRepository.save(game2);
-        gameUserInterface.logIn();
-        gameUserInterface.findGames();
+//        gameUserInterface.logIn();
+//        gameUserInterface.findGames();
+        //Scanner scanner = new Scanner(System.in);
+        List<Game> listOfGamesBought= gameUserInterface.findGames();
+            gameUserInterface.addGamesToShoppingCart(listOfGamesBought);
+        List<Game> listOfGamesInShoppingCart= gameUserInterface.addGamesToShoppingCart(listOfGamesBought);
+
 
         SessionManager.shutDown();
     }

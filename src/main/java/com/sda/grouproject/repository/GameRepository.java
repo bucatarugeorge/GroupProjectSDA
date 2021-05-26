@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
+import java.util.List;
 
 public class GameRepository extends GenericRepository {
 
@@ -21,16 +22,16 @@ public class GameRepository extends GenericRepository {
     }
 
 
-    public Game findByGameName(String gameName)
+    public List<Game> findByGameName()
     {
         try {
             Session session = SessionManager.getSessionFactory().openSession();
-            String findByGameNameQuerry = "from Game g where g.gameName=: gameName";
+            String findByGameNameQuerry = "from Game";
             Query<Game> gameQuery = session.createQuery(findByGameNameQuerry);
-            gameQuery.setParameter("gameName", gameName);
-            Game game = gameQuery.getSingleResult();
+            //gameQuery.setParameter("gameName", gameName);
+            List<Game> games = gameQuery.list();
             session.close();
-            return game;
+            return games;
         }
         catch (NoResultException e)
         {

@@ -176,16 +176,16 @@ public class Game {
 
     @Override
     public String toString() {
-        return "Game{" +
-                "gameId=" + gameId +
-                ", name='" + gameName + '\'' +
+        return   gameName + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
+                ", publisher= "+ publisher.getPublisherName()+
+                ", developer= "+ developer.getDeveloperName()+
                 ", genre=" + genre +
                 ", exclusive=" + exclusive +
                 ", rating=" + rating +
-                ", ratingCount=" + ratingCount +
+                ", ratings=" + ratingCount +
                 ", ageRestriction=" + ageRestriction +
-                '}';
+                '\n';
     }
 }
