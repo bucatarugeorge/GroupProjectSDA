@@ -1,17 +1,13 @@
 package com.sda.grouproject.repository;
-
-import com.sda.grouproject.enums.Exclusive;
-import com.sda.grouproject.enums.Genre;
 import com.sda.grouproject.model.Game;
 import com.sda.grouproject.model.User;
 import com.sda.grouproject.utils.SessionManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-
 import javax.persistence.NoResultException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GameUserInterface {
 
@@ -176,7 +172,7 @@ public class GameUserInterface {
         }
         return games;
     }
-    public List<Game> addGamesToShoppingCart(List<Game> listOfGamesBought) {
+    public List<Game> addGamesToShoppingCartAndPay(List<Game> listOfGamesBought) {
 
         System.out.println("List of Games selected:");
         int i=1;
@@ -184,7 +180,7 @@ public class GameUserInterface {
             System.out.println(i+ ". " + game);
             i++;
         }
-        System.out.println("Type Exit if you wish to leave or Add if you want to continue.");
+        System.out.println("Type Exit if you wish to leave, Add if you want to continue or Return if you want to search a different thing.");
 
         Scanner scanner1= new Scanner(System.in);
         String choice= scanner1.nextLine();
@@ -197,18 +193,140 @@ public class GameUserInterface {
             selectedGamesForShoppingCart.add(listOfGamesBought.get(selectedIndexGame - 1));
             System.out.println("List of Games in Shopping cart\n" +
                     selectedGamesForShoppingCart);
-            addGamesToShoppingCart(listOfGamesBought);
+            addGamesToShoppingCartAndPay(listOfGamesBought);
+        }
+        else if(choice.equals("Return"))
+        {
+            addGamesToShoppingCartAndPay(findGames());
         }
         else if(choice.equals("Exit"))
         {
             System.out.println("BYE-BYE");
+        }
+
+        else if(choice.equals("Pay"))
+        {
+            System.out.println("Proceeding to payment.");
+            payForGames(selectedGamesForShoppingCart);
         }
         return selectedGamesForShoppingCart;
     }
 
     public void payForGames(List<Game> listOfGamesInShoppingCart)
     {
-        //todo add superficial functionality for paying for the games
+        double sum=0;
+        for (Game game : listOfGamesInShoppingCart) {
+            sum+= game.getPrice();
+        }
+        System.out.println("Sum of games is "+ sum + "DogeCoins");
+        System.out.println("Would you like to continue with the payment or add more to your shopping cart? " +
+                "Keep in mind that if you don't, your shopping cart will be emptied. Yes/No/More.");
+        Scanner scanner= new Scanner(System.in);
+        String choice2= scanner.nextLine();
+        switch (choice2) {
+            case "No":
+                listOfGamesInShoppingCart.clear();
+                addGamesToShoppingCartAndPay(findGames());
+                break;
+            case "More":
+                addGamesToShoppingCartAndPay(findGames());
+                break;
+            case "Yes":
+                System.out.println("Please introduce a valid credit card Type: Visa, MasterCard or AmericanExpress.");
+                String choice3 = scanner.nextLine();
+                cardChoices(choice3, listOfGamesInShoppingCart);
+                break;
+        }
+    }
+
+    public void rateGames(List<Game> gamesToBeRated)
+    {
+        Set<Game> setToBeRated= new HashSet<>(gamesToBeRated);
+        for (Game game: setToBeRated) {
+
+            System.out.println("Please rate this game from 1 to 5: "+ game.getGameName());
+            Scanner scanner12= new Scanner(System.in);
+            int userRating= scanner12.nextInt();
+
+            game.setRatingCount(game.getRatingCount()+1);
+            System.out.println("Ratings are now: " + game.getRatingCount());
+
+            game.setTotalRatingSum(game.getTotalRatingSum()+userRating);
+            System.out.println("rating sum is"+ game.getTotalRatingSum());
+
+            game.setRating(game.getTotalRatingSum()/game.getRatingCount());
+            System.out.println("Rating is: "+ game.getRating());
+
+            GameRepository.getInstance().update(game);
+
+        }
+        System.out.println("Thanks for taking the time to shop with us.");
+    }
+    public void cardChoices(String choice3, List<Game> listOfGamesInShoppingCart)
+    {
+        switch (choice3){
+            case "Visa":
+            {
+                System.out.println("Please a introduce a valid card number. Ex: 16 digits, starting with 4.");
+                Scanner scanner9= new Scanner(System.in);
+                Pattern pattern= Pattern.compile("^(4[0-9]{15})");
+                Matcher matcher= pattern.matcher(scanner9.nextLine());
+                boolean matchFound= matcher.find();
+                if(matchFound)
+                {
+                    System.out.println("Payment completed");
+                }
+                else
+                {
+                    System.out.println("Wrong card number.");
+                    payForGames(listOfGamesInShoppingCart);
+                }
+                break;
+            }
+            case "MasterCard":
+            {
+                System.out.println("Please a introduce a valid card number. Ex: 16 digits, starting with 51 through 55.");
+                Scanner scanner10= new Scanner(System.in);
+                Pattern pattern= Pattern.compile("^(5[1-5][0-9]{14})");
+                Matcher matcher= pattern.matcher(scanner10.nextLine());
+                boolean matchFound= matcher.find();
+                if(matchFound)
+                {
+                    System.out.println("Payment completed");
+                }
+                else
+                {
+                    System.out.println("Wrong card number.");
+                    payForGames(listOfGamesInShoppingCart);
+                }
+                break;
+            }
+            case "AmericanExpress":
+
+            {
+                System.out.println("Please a introduce a valid card number. Ex: 15 digits, starting with 34 or 37.");
+                Scanner scanner11= new Scanner(System.in);
+                Pattern pattern= Pattern.compile("^(3[47][0-9]{13})");
+                Matcher matcher= pattern.matcher(scanner11.nextLine());
+                boolean matchFound= matcher.find();
+                if(matchFound)
+                {
+                    System.out.println("Payment completed");
+                }
+                else
+                {
+                    System.out.println("Wrong card number.");
+                    payForGames(listOfGamesInShoppingCart);
+                }
+                break;
+            }
+            default:
+            {
+                System.out.println("Something went wrong with the transaction.");
+                payForGames(listOfGamesInShoppingCart);
+                break;
+            }
+        }
     }
 }
 

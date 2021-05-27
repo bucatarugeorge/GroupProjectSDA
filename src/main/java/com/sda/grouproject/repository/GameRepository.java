@@ -13,6 +13,20 @@ import java.util.List;
 
 public class GameRepository extends GenericRepository {
 
+    private static GameRepository instance;
+
+    private GameRepository()
+    {
+
+    }
+    public static GameRepository getInstance()
+    {
+        if(instance==null) {
+            instance= new GameRepository();
+        }
+        return instance;
+    }
+
     public Game findById(Integer id)
     {
         Session session= SessionManager.getSessionFactory().openSession();

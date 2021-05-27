@@ -1,12 +1,7 @@
 package com.sda.grouproject.repository;
-
-import com.sda.grouproject.model.Game;
 import com.sda.grouproject.utils.SessionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-
-import java.util.List;
 
 public class GenericRepository implements Repository {
     @Override

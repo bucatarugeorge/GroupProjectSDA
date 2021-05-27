@@ -31,8 +31,8 @@ public class Game {
     @Enumerated(EnumType.STRING)
     private AgeRestriction ageRestriction;
     @Column(name = "rating_count")
-    private int ratingCount;
-    private int totalRatingSum;
+    private double ratingCount;
+    private double totalRatingSum;
 
     @ManyToOne
     @JoinColumn(name = "developer_id")
@@ -49,7 +49,7 @@ public class Game {
     private Set<User> userSet= new HashSet<>();
 
     public Game(String gameName, Double price, String description, Genre genre,
-                Exclusive exclusive, int rating, AgeRestriction ageRestriction, Publisher publisher, Developer developer) {
+                Exclusive exclusive, double rating, AgeRestriction ageRestriction, Publisher publisher, Developer developer) {
         this.gameName = gameName;
         this.price = price;
         this.description = description;
@@ -121,11 +121,11 @@ public class Game {
         this.rating = rating;
     }
 
-    public int getRatingCount() {
+    public double getRatingCount() {
         return ratingCount;
     }
 
-    public void setRatingCount(int ratingCount) {
+    public void setRatingCount(double ratingCount) {
         this.ratingCount = ratingCount;
     }
 
@@ -138,11 +138,11 @@ public class Game {
     }
 
 
-    public Integer getTotalRatingSum() {
+    public double getTotalRatingSum() {
         return totalRatingSum;
     }
 
-    public void setTotalRatingSum(Integer totalRatingSum) {
+    public void setTotalRatingSum(double totalRatingSum) {
         this.totalRatingSum = totalRatingSum;
     }
 

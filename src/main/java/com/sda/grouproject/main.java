@@ -18,7 +18,6 @@ public class main {
 
         DeveloperRepository developerRepository= new DeveloperRepository();
         PublisherRepository publisherRepository= new PublisherRepository();
-        GameRepository gameRepository= new GameRepository();
 
         User user1= new User("bigPePeEnergy69", "bibPP420@gmail.smokeit","123456");
         Developer developer1= new Developer("ABCD");
@@ -43,15 +42,17 @@ public class main {
         Game game1= new Game("Cyberpunk 2077", 60.0,"Dissapointment", Genre.SANDBOX,
                 Exclusive.ALL,3, AgeRestriction.MATURE, publisher1, developer1);
         Game game2= new Game("Destiny 2", 60.0, "Depression", Genre.MMORPG,
-                Exclusive.ALL, 1, AgeRestriction.TEEN,publisher2, developer2);
-        gameRepository.save(game1);
-        gameRepository.save(game2);
-//        gameUserInterface.logIn();
-//        gameUserInterface.findGames();
-        //Scanner scanner = new Scanner(System.in);
-        List<Game> listOfGamesBought= gameUserInterface.findGames();
-            gameUserInterface.addGamesToShoppingCart(listOfGamesBought);
-        List<Game> listOfGamesInShoppingCart= gameUserInterface.addGamesToShoppingCart(listOfGamesBought);
+                Exclusive.ALL, 5, AgeRestriction.TEEN,publisher2, developer2);
+        game1.setTotalRatingSum(3);
+        game1.setRatingCount(1);
+        GameRepository.getInstance().save(game1);
+
+        game2.setTotalRatingSum(15);
+        game2.setRatingCount(3);
+        GameRepository.getInstance().save(game2);
+
+        List<Game> listOfGamesInShoppingCart= gameUserInterface.addGamesToShoppingCartAndPay(gameUserInterface.findGames());
+        gameUserInterface.rateGames(listOfGamesInShoppingCart);
 
 
         SessionManager.shutDown();
