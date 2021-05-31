@@ -8,6 +8,21 @@ import org.hibernate.Transaction;
 
 public class PublisherRepository extends GenericRepository {
 
+    private static PublisherRepository instance;
+    private PublisherRepository()
+    {
+
+    }
+
+    public static PublisherRepository getInstance()
+    {
+        if(instance==null)
+        {
+            instance= new PublisherRepository();
+        }
+        return instance;
+    }
+
     public Publisher findById(Integer id)
     {
         Session session= SessionManager.getSessionFactory().openSession();

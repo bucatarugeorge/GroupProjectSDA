@@ -20,7 +20,7 @@ public class GameUserInterface {
     String FIND_ALL_GAMES = "from Game";
     private List<Game> selectedGamesForShoppingCart= new ArrayList<>();
 
-    public void registerSave(User user) {
+    public static void registerSave(User user) {
         Scanner scanner = new Scanner(System.in);
         registerUserName(user);
         registerEmail(user);
@@ -30,7 +30,7 @@ public class GameUserInterface {
 
     }
 
-    public void logIn() {
+    public static void logIn() {
         System.out.print("Welcome to GameShop: Register or Login?:");
         Scanner scanner = new Scanner(System.in);
         String chosenOption = scanner.nextLine();
@@ -58,7 +58,7 @@ public class GameUserInterface {
 
     }
 
-    private void registerUserName(User user) {
+    private static void registerUserName(User user) {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -74,7 +74,7 @@ public class GameUserInterface {
 
     }
 
-    private void registerEmail(User user) {
+    private static void registerEmail(User user) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Email:");
         String emailOption = scanner.nextLine();

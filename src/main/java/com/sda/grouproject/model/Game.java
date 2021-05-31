@@ -146,9 +146,9 @@ public class Game {
         this.totalRatingSum = totalRatingSum;
     }
 
-    public void setTotalRatingSum(int totalRatingSum) {
-        this.totalRatingSum = totalRatingSum;
-    }
+//    public void setTotalRatingSum(int totalRatingSum) {
+//        this.totalRatingSum = totalRatingSum;
+//    }
 
     public Developer getDeveloper() {
         return developer;
