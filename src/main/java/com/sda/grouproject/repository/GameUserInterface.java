@@ -180,14 +180,17 @@ public class GameUserInterface {
             System.out.println(i+ ". " + game);
             i++;
         }
-        System.out.println("Type Exit if you wish to leave, Add if you want to continue or Return if you want to search a different thing.");
+        System.out.println("Type Return if you want to search a different thing.\n" +
+                "Add if you want to continue.\n" +
+                "Pay to...well to pay my guy/gal.\n" +
+                "Type Exit if you wish to leave. \n");
 
         Scanner scanner1= new Scanner(System.in);
         String choice= scanner1.nextLine();
 
         if (!choice.equals("Exit") && choice.equals("Add"))
         {
-            System.out.println("Select the game you wish to add to your shopping cart or Exit.");
+            System.out.println("Select the game you wish to add to your shopping cart.");
             Scanner scanner = new Scanner(System.in);
             int selectedIndexGame = scanner.nextInt();
             selectedGamesForShoppingCart.add(listOfGamesBought.get(selectedIndexGame - 1));
@@ -201,7 +204,8 @@ public class GameUserInterface {
         }
         else if(choice.equals("Exit"))
         {
-            System.out.println("BYE-BYE");
+            System.out.println("BYE-BYE\n" +
+                    "Please reconfirm your Exit by typing Exit again.");
         }
 
         else if(choice.equals("Pay"))
@@ -239,6 +243,8 @@ public class GameUserInterface {
         }
     }
 
+    public void takeGamesOutShoppingCart(){}
+    //todo come back to this on a sunny day
     public void rateGames(List<Game> gamesToBeRated)
     {
         Set<Game> setToBeRated= new HashSet<>(gamesToBeRated);
@@ -328,6 +334,7 @@ public class GameUserInterface {
             }
         }
     }
+
 }
 
 
